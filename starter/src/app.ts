@@ -43,19 +43,23 @@ export class App {
         const yesMarkerBtn = document.createElement('button');
         const noMarkerBtn = document.createElement('button');
         const newGameBtn = document.createElement('button');
+        const tryBtn = document.createElement('button');
 
         container.id = 'container';
         livesDiv.id = 'lives';
         yesNoMarker.id = 'yesNoMarkerLabel';
         yesMarkerBtn.id = 'yesBtn';
         noMarkerBtn.id = 'noBtn';
-        livesDiv.innerText = 'Życia: 3';
+        tryBtn.id = 'try';
+        livesDiv.innerText = 'Życia: 9';
         yesMarkerBtn.innerText = 'v';
         noMarkerBtn.innerText = 'x';
         newGameBtn.innerText = 'Nowa gra';
+        tryBtn.innerText = '?';
 
         yesMarkerBtn.addEventListener('click', this.buttonMarkYes);
         noMarkerBtn.addEventListener('click', this.buttonMarkNo);
+        tryBtn.addEventListener('click', this.buttonMarkTry);
         newGameBtn.addEventListener('click', () => { this.start(); });
 
         cornerDiv.classList.add('board');
@@ -115,11 +119,22 @@ export class App {
                             }
                         }
                     } else {
-                        if (this.innerText === 'X') {
-                            this.innerText = '';
+                        if (document.getElementById('yesNoMarkerLabel').dataset.switch === '?') {
+                            if (this.innerText === '?') {
+                                this.innerText = '';
+                            } else {
+                                this.innerText = '?';
+                            }
                         } else {
-                            this.innerText = 'X';
-                        }
+
+
+                            if (this.innerText === 'X') {
+                                this.innerText = '';
+                            } else {
+                                this.innerText = 'X';
+                            }
+                        }//else wew do pytajnika
+
                     }
                 });
 
@@ -181,6 +196,8 @@ export class App {
         container.appendChild(yesMarkerBtn);
         container.appendChild(noMarkerBtn);
         container.appendChild(newGameBtn);
+        container.appendChild(tryBtn);
+        
 
         root.appendChild(container);
 
@@ -205,7 +222,7 @@ export class App {
                 if (result) {
                     resultSum++;
                 }
-                document.getElementById('field' + i + j).style.backgroundColor = result ? 'white' : 'white'; //pierwsze white zaniemic np na green i sa cheaty
+                document.getElementById('field' + i + j).style.backgroundColor = result ? 'white' : 'white'; //pierwsze white zaniemic np na green i sa cheatynpi
                 document.getElementById('field' + i + j).dataset.f = result ? 'p' : 'f';
             }
         }
@@ -344,5 +361,13 @@ export class App {
         elem.innerText = 'Tryb: blokowanie pól podejrzewanych o puste';
         elem.dataset.switch = 'off';
     }
+    buttonMarkTry(): void {
+        this.yesNoMarker = false;
+        const elem = document.getElementById('yesNoMarkerLabel');
+        elem.innerText = 'Tryb: blokowanie pól podejrzewanych o pełne';
+        elem.dataset.switch = '?';
+    }
+
+
 
 }
