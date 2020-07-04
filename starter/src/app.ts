@@ -42,61 +42,20 @@ export class App {
         up.classList.add('flex');
         down.classList.add('flex');
 
-        const boardRow1 = document.createElement('div');
-        const field0 = document.createElement('div');
-        const field1 = document.createElement('div');
-        const field2 = document.createElement('div');
-        const field3 = document.createElement('div');
-        const field4 = document.createElement('div');
-        const field5 = document.createElement('div');
-        const field6 = document.createElement('div');
-        const field7 = document.createElement('div');
-        const field8 = document.createElement('div');
-        const field9 = document.createElement('div');
-        field0.classList.add('field');
-        field1.classList.add('field');
-        field2.classList.add('field');
-        field3.classList.add('field');
-        field4.classList.add('field');
-        field5.classList.add('field');
-        field6.classList.add('field');
-        field7.classList.add('field');
-        field8.classList.add('field');
-        field9.classList.add('field');
-
-        boardRow1.classList.add('flex');
-        boardRow1.classList.add('boardRow');
-
-        boardRow1.appendChild(field0);
-        boardRow1.appendChild(field1);
-        boardRow1.appendChild(field2);
-        boardRow1.appendChild(field3);
-        boardRow1.appendChild(field4);
-        boardRow1.appendChild(field5);
-        boardRow1.appendChild(field6);
-        boardRow1.appendChild(field7);
-        boardRow1.appendChild(field8);
-        boardRow1.appendChild(field9);
-        const boardRow2 = boardRow1.cloneNode(true);
-        const boardRow3 = boardRow1.cloneNode(true);
-        const boardRow4 = boardRow1.cloneNode(true);
-        const boardRow5 = boardRow1.cloneNode(true);
-        const boardRow6 = boardRow1.cloneNode(true);
-        const boardRow7 = boardRow1.cloneNode(true);
-        const boardRow8 = boardRow1.cloneNode(true);
-        const boardRow9 = boardRow1.cloneNode(true);
-        const boardRow10 = boardRow1.cloneNode(true);
-
-        boardDiv.appendChild(boardRow1);
-        boardDiv.appendChild(boardRow2);
-        boardDiv.appendChild(boardRow3);
-        boardDiv.appendChild(boardRow4);
-        boardDiv.appendChild(boardRow5);
-        boardDiv.appendChild(boardRow6);
-        boardDiv.appendChild(boardRow7);
-        boardDiv.appendChild(boardRow8);
-        boardDiv.appendChild(boardRow9);
-        boardDiv.appendChild(boardRow10);
+        const arrayOfChildren = [];
+        const arrayOfRows = [];
+        for (let j = 0; j < 10; j++) {
+            arrayOfRows[j] = document.createElement('div');
+            arrayOfRows[j].classList.add('flex');
+            arrayOfRows[j].classList.add('boardRow');
+            for (let i = 0; i < 10; i++) {
+                arrayOfChildren[i] = document.createElement('div');
+                arrayOfChildren[i].classList.add('field');
+                arrayOfChildren[i].addEventListener('click', this.fieldEvent);
+                arrayOfRows[j].appendChild(arrayOfChildren[i]);
+            }
+            boardDiv.appendChild(arrayOfRows[j]);
+        }
 
         const tipLineV = document.createElement('div');
         const tipLineH = document.createElement('div');
@@ -282,7 +241,7 @@ export class App {
 
         /////////////////////////////////
 
-       
+
 
         //poprawianie tablic jesli sa na poczatku puste miejsca
         for (let i = 0; i < 10; i++) {
@@ -294,7 +253,7 @@ export class App {
             if (upperTips[i][0] === '') {
                 upperTips[i].shift();
                 upperTips[i].push('');
-               // upperTips[i] = upperTips[i].slice(0, 4);
+                // upperTips[i] = upperTips[i].slice(0, 4);
             }
         }
 
@@ -312,9 +271,9 @@ export class App {
         //fill tips upper
         for (let i = 0; i < 10; i++) {
             for (let j = 0; j < 5; j++) {
-              //  if(upperTips[i][j]!=undefined){
-                    document.getElementById('u' + i + Number(j + 1)).innerText = upperTips[i][j];
-              //  }
+                //  if(upperTips[i][j]!=undefined){
+                document.getElementById('u' + i + Number(j + 1)).innerText = upperTips[i][j];
+                //  }
             }
         }
 
@@ -324,5 +283,9 @@ export class App {
     }// setTips
 
 
+
+    fieldEvent() {
+        console.log('kliknieto pole, this:', this);
+    }
 
 }
