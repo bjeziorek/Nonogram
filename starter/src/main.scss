@@ -1,0 +1,54 @@
+$boardSize: 250px;
+$margin: 0.6 * $boardSize;
+$tipSize: 0.4 * $boardSize;
+$fieldSize: 0.1 * $boardSize;
+
+body {
+  background: lightblue;
+  .board {
+    border: 2px solid black;
+   
+  }
+
+  .field {
+    border: 1px solid black;
+    width: $fieldSize - 2px;
+    height: $fieldSize - 2px;
+  }
+  .fieldTip {
+    border: 2px solid lightblue;
+    width: $fieldSize - 4px;
+    height: $fieldSize - 4px;
+    text-align: center;
+  }
+
+  .corner {
+    width: $boardSize;
+    height: $boardSize;
+    background-color: blanchedalmond;
+  }
+
+  .flex {
+    display: flex;
+    flex-wrap: nowrap;
+  }
+
+  .rightTip {
+    
+
+    width: $tipSize;
+    height: $boardSize;
+  }
+  .upperTip {
+    margin-left: $tipSize + 4px;
+
+    width: $boardSize;
+    height: $tipSize+$fieldSize;
+  }
+
+  .mainBoard {
+    width: $boardSize;
+    height: $boardSize;
+    background-color: lightblue;
+  }
+}
