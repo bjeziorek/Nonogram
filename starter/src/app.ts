@@ -294,7 +294,7 @@ export class App {
             if (upperTips[i][0] === '') {
                 upperTips[i].shift();
                 upperTips[i].push('');
-                upperTips[i] = upperTips[i].slice(0, 4);
+               // upperTips[i] = upperTips[i].slice(0, 4);
             }
         }
 
@@ -312,8 +312,9 @@ export class App {
         //fill tips upper
         for (let i = 0; i < 10; i++) {
             for (let j = 0; j < 5; j++) {
-
-                document.getElementById('u' + i + Number(j + 1)).innerText = upperTips[i][j];
+              //  if(upperTips[i][j]!=undefined){
+                    document.getElementById('u' + i + Number(j + 1)).innerText = upperTips[i][j];
+              //  }
             }
         }
 
