@@ -33,11 +33,11 @@ export class App {
 
         cornerDiv.classList.add('board');
         cornerDiv.classList.add('corner');
-        upperTipsDiv.classList.add('board');
+        // upperTipsDiv.classList.add('board');
         upperTipsDiv.classList.add('upperTip');
-        rightTipsDiv.classList.add('board');
+        // rightTipsDiv.classList.add('board');
         rightTipsDiv.classList.add('rightTip');
-        boardDiv.classList.add('board');
+        // boardDiv.classList.add('board');
         boardDiv.classList.add('mainBoard');
         up.classList.add('flex');
         down.classList.add('flex');
@@ -173,16 +173,16 @@ export class App {
     setTips(): void {
 
         const rightTips = [
-            ['', '', '', '', ''],
-            ['', '', '', '', ''],
-            ['', '', '', '', ''],
-            ['', '', '', '', ''],
-            ['', '', '', '', ''],
-            ['', '', '', '', ''],
-            ['', '', '', '', ''],
-            ['', '', '', '', ''],
-            ['', '', '', '', ''],
-            ['', '', '', '', '']
+            ['', '', '', '', '', ''],//jest po 6, bo mam gdzies buga i nie zaczyna od 0 tylko od 1, ale potem wszystko przesuwam i dziala
+            ['', '', '', '', '', ''],
+            ['', '', '', '', '', ''],
+            ['', '', '', '', '', ''],
+            ['', '', '', '', '', ''],
+            ['', '', '', '', '', ''],
+            ['', '', '', '', '', ''],
+            ['', '', '', '', '', ''],
+            ['', '', '', '', '', ''],
+            ['', '', '', '', '', '']
         ];
 
         let incIndex = false;
@@ -227,60 +227,80 @@ export class App {
 
 
         const upperTips = [
-            ['', '', '', '', ''],
-            ['', '', '', '', ''],
-            ['', '', '', '', ''],
-            ['', '', '', '', ''],
-            ['', '', '', '', ''],
-            ['', '', '', '', ''],
-            ['', '', '', '', ''],
-            ['', '', '', '', ''],
-            ['', '', '', '', ''],
-            ['', '', '', '', '']
+            ['', '', '', '', '', ''],//jest po 6, bo mam gdzies buga i nie zaczyna od 0 tylko od 1, ale potem wszystko przesuwam i dziala
+            ['', '', '', '', '', ''],
+            ['', '', '', '', '', ''],
+            ['', '', '', '', '', ''],
+            ['', '', '', '', '', ''],
+            ['', '', '', '', '', ''],
+            ['', '', '', '', '', ''],
+            ['', '', '', '', '', ''],
+            ['', '', '', '', '', ''],
+            ['', '', '', '', '', '']
         ];
-        /*    
-             tipIndex = 0;
-             FlagTF = false;
-             for (let row = 0; row < 10; row++) {
-                 tipIndex = 0;
-                 for (let i = 9; i >= 0; i--) {
-                     console.log('mam warość:', this.gameArray[i][row], "w this.gameArray[", i, '][', row, "]");
-                     if (this.gameArray[i][row]) {
-                         console.log('jest prawdziwa, flaga true');
-                         FlagTF = true;
-                         // jesli jest true (niewaznle czy t byl pierwszy element czy nie
-                         // ) wiec nie wiemy na ktorym indeksie pracujemy
-                         if (upperTips[row][tipIndex] === '') {
-                             console.log('inicjalizuje indeks, bo byl niezainicjalizowany');
-                             // jesli obecnego indeksu nie uzyto, to zainicjalizuj zerem
-                             upperTips[row][tipIndex] = (0).toString();
-                         }
-                         // dodajemy do obecnego indeksu +1
-                         let x = (Number(upperTips[row][tipIndex]) + 1).toString();
-                         upperTips[row][tipIndex] = x;
-                         console.log('w rightTips[', row, '][', tipIndex, '] wpisuje zinkrementowana wartosc:', x);
-     
-                     } else {// jesliz bylo false, i niewazne czy pierwsze false czy kolejne
-                         // to trzeba sprawdzic czy nalezy przelaczyc indeks, bo jak mamy kilka false pod rzad
-                         // to poprzeskakujemy sobie indeksy
-                         // sprawdzic to mozeny if poprzedni element byl true
-                         // a co jesli sprobujemy dostac sie do i==-1?
-                         if (FlagTF) {
-                             tipIndex++;
-                         }
-                         console.log('wartosc nie jest prawdziwa');
-                         FlagTF = false;
-     
-                     }
-                 }// for wew
-             }// for zew
-             console.log(upperTips);
-     
-     
-     */
+
+        /////////////////////////////
+
+        incIndex = false;
+        tipIndex = 0;
+        flagTF = false;
+        for (let row = 0; row < 10; row++) {
+            tipIndex = 0;
+            for (let i = 9; i >= 0; i--) {
+                console.log('mam warość:', this.gameArray[i][row], "w this.gameArray[", i, '][', row, "]");
+                if (this.gameArray[i][row]) {
+                    console.log('jest prawdziwa, flaga true');
+                    flagTF = true;
+                    // jesli jest true (niewaznle czy t byl pierwszy element czy nie
+                    // ) wiec nie wiemy na ktorym indeksie pracujemy
+                    if (incIndex) {
+                        console.log('incIndex true');
+                        tipIndex++;
+                        incIndex = false;
+                    }
+                    if (upperTips[row][tipIndex] === '') {
+                        console.log('inicjalizuje indeks, bo byl niezainicjalizowany');
+                        // jesli obecnego indeksu nie uzyto, to zainicjalizuj zerem
+                        upperTips[row][tipIndex] = (0).toString();
+                    }
+                    // dodajemy do obecnego indeksu +1
+                    let x = (Number(upperTips[row][tipIndex]) + 1).toString();
+                    upperTips[row][tipIndex] = x;
+                    console.log('w upperTips[', row, '][', tipIndex, '] wpisuje zinkrementowana wartosc:', x);
+
+                } else {
+                    if (flagTF) {
+                        console.log('flagTF true');
+                        incIndex = true;
+                    }
+                    console.log('wartosc nie jest prawdziwa');
+                    flagTF = false;
+                }
+            }// for wew
+        }// for zew
 
 
         /////////////////////////////////
+
+       
+
+        //poprawianie tablic jesli sa na poczatku puste miejsca
+        for (let i = 0; i < 10; i++) {
+            if (rightTips[i][0] === '') {
+                rightTips[i].shift();
+                rightTips[i].push('');
+            }
+
+            if (upperTips[i][0] === '') {
+                upperTips[i].shift();
+                upperTips[i].push('');
+                upperTips[i] = upperTips[i].slice(0, 4);
+            }
+        }
+
+        console.log(upperTips);
+        console.log(rightTips);
+
 
         //fill tips right
         for (let i = 0; i < 10; i++) {
@@ -297,6 +317,11 @@ export class App {
             }
         }
 
+
+
+
     }// setTips
+
+
 
 }
