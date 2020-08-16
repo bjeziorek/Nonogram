@@ -1,21 +1,11 @@
-import { SetTips } from './set-tips';
-import { FillBoard } from './fill-board';
-import { CreateBoard } from './create-board';
-export class App {
-    constructor() {
-        this.start();
+export class CreateBoard {
+    yesNoMarker = false;
+    startFunction: () => void;
+    constructor(startF: () => void) {
+        this.startFunction = startF;
+        this.generateBoard();
     }
-    start(): void {
-        // this.generateBoard();
-        //  this.fillBoard();
-        //   this.setTips();
-        const cb = new CreateBoard(this.start);
-        const fb = new FillBoard();
-        const st = new SetTips( fb.getGameArray());
-
-    }
-
-    generateBoard(): void {/*
+    generateBoard(): void {
         const containerToRemove = document.getElementById('container');
         if (containerToRemove !== null) {
             containerToRemove.remove();
@@ -52,7 +42,7 @@ export class App {
         yesMarkerBtn.addEventListener('click', this.buttonMarkYes);
         noMarkerBtn.addEventListener('click', this.buttonMarkNo);
         tryBtn.addEventListener('click', this.buttonMarkTry);
-        newGameBtn.addEventListener('click', () => { this.start(); });
+        newGameBtn.addEventListener('click', () => { this.startFunction(); });
 
         cornerDiv.classList.add('board');
         cornerDiv.classList.add('corner');
@@ -75,7 +65,7 @@ export class App {
                 arrayOfChildren[i] = document.createElement('div');
                 arrayOfChildren[i].classList.add('field');
                 arrayOfChildren[i].addEventListener('click', function clickFunction(): void {   //dlaczego dla ()=>{} this.is jest niewidoczne, a dla function(){} jest?
-                //e.target - tu div
+                    //e.target - tu div
                     if (document.getElementById('yesNoMarkerLabel').dataset.switch === 'on') {
                         if (this.dataset.f === 'p') {
                             this.style.backgroundColor = 'black';
@@ -130,9 +120,7 @@ export class App {
 
                     }
                 });
-                //
 
-                
                 ///this.fieldEvent);
                 arrayOfRows[j].appendChild(arrayOfChildren[i]);
             }
@@ -192,7 +180,7 @@ export class App {
         container.appendChild(noMarkerBtn);
         container.appendChild(newGameBtn);
         container.appendChild(tryBtn);
-        
+
 
         root.appendChild(container);
 
@@ -203,147 +191,27 @@ export class App {
                 boardRows[i].children[j].id = 'field' + i.toString() + j.toString();
             }
 
-        }*/
-    }//generate board
-
-    fillBoard(): void {//przeniesione do fill-board
-        /*  let result = false;
-          let resultSum = 0;
-          for (let i = 0; i < 10; i++) {
-              for (let j = 0; j < 10; j++) {
-                  const r = Math.floor(Math.random() * 10);
-                  result = r > 5;
-                  this.gameArray[i][j] = result;
-                  if (result) {
-                      resultSum++;
-                  }
-                  document.getElementById('field' + i + j).style.backgroundColor = result ? 'white' : 'white'; //pierwsze white zaniemic np na green i sa cheatynpi
-                  document.getElementById('field' + i + j).dataset.f = result ? 'p' : 'f';
-              }
-          }
-          document.getElementById('field00').dataset.sum = resultSum.toString();
-          document.getElementById('field00').dataset.progress = '0';
-          this.setTips();*/
-
-    }// fillboard
-
-    setTips(): void {/*
-
-        const rightTips = [
-            ['', '', '', '', '', ''], // jest po 6, bo mam gdzies buga i nie zaczyna od 0 tylko od 1, ale potem wszystko przesuwam i dziala
-            ['', '', '', '', '', ''],
-            ['', '', '', '', '', ''],
-            ['', '', '', '', '', ''],
-            ['', '', '', '', '', ''],
-            ['', '', '', '', '', ''],
-            ['', '', '', '', '', ''],
-            ['', '', '', '', '', ''],
-            ['', '', '', '', '', ''],
-            ['', '', '', '', '', '']
-        ];
-
-        let incIndex = false;
-        let tipIndex = 0;
-        let flagTF = false;
-        for (let column = 0; column < 10; column++) {
-            tipIndex = 0;
-            for (let i = 9; i >= 0; i--) {
-                if (this.gameArray[column][i]) {
-                    flagTF = true;
-                    // jesli jest true (niewaznle czy t byl pierwszy element czy nie
-                    // ) wiec nie wiemy na ktorym indeksie pracujemy
-                    if (incIndex) {
-                        tipIndex++;
-                        incIndex = false;
-                    }
-                    if (rightTips[column][tipIndex] === '') {
-                        // jesli obecnego indeksu nie uzyto, to zainicjalizuj zerem
-                        rightTips[column][tipIndex] = (0).toString();
-                    }
-                    // dodajemy do obecnego indeksu +1
-                    let x = (Number(rightTips[column][tipIndex]) + 1).toString();
-                    rightTips[column][tipIndex] = x;
-                } else {
-                    if (flagTF) {
-                        incIndex = true;
-                    }
-                    flagTF = false;
-                }
-            }// for wew
-        }// for zew
-
-        const upperTips = [
-            ['', '', '', '', '', ''],// jest po 6, bo mam gdzies buga i nie zaczyna od 0 tylko od 1, ale potem wszystko przesuwam i dziala
-            ['', '', '', '', '', ''],
-            ['', '', '', '', '', ''],
-            ['', '', '', '', '', ''],
-            ['', '', '', '', '', ''],
-            ['', '', '', '', '', ''],
-            ['', '', '', '', '', ''],
-            ['', '', '', '', '', ''],
-            ['', '', '', '', '', ''],
-            ['', '', '', '', '', '']
-        ];
-
-        incIndex = false;
-        tipIndex = 0;
-        flagTF = false;
-        for (let row = 0; row < 10; row++) {
-            tipIndex = 0;
-            for (let i = 9; i >= 0; i--) {
-                if (this.gameArray[i][row]) {
-                    flagTF = true;
-                    // jesli jest true (niewaznle czy t byl pierwszy element czy nie
-                    // ) wiec nie wiemy na ktorym indeksie pracujemy
-                    if (incIndex) {
-                        tipIndex++;
-                        incIndex = false;
-                    }
-                    if (upperTips[row][tipIndex] === '') {
-                        // jesli obecnego indeksu nie uzyto, to zainicjalizuj zerem
-                        upperTips[row][tipIndex] = (0).toString();
-                    }
-                    // dodajemy do obecnego indeksu +1
-                    let x = (Number(upperTips[row][tipIndex]) + 1).toString();
-                    upperTips[row][tipIndex] = x;
-                } else {
-                    if (flagTF) {
-                        incIndex = true;
-                    }
-                    flagTF = false;
-                }
-            }// for wew
-        }// for zew
-
-        // poprawianie tablic jesli sa na poczatku puste miejsca
-        for (let i = 0; i < 10; i++) {
-            if (rightTips[i][0] === '') {
-                rightTips[i].shift();
-                rightTips[i].push('');
-            }
-
-            if (upperTips[i][0] === '') {
-                upperTips[i].shift();
-                upperTips[i].push('');
-                // upperTips[i] = upperTips[i].slice(0, 4);
-            }
         }
+    }//generateBoard
+    buttonMarkYes(): void {
+        this.yesNoMarker = true;
+        const elem = document.getElementById('yesNoMarkerLabel');
+        elem.innerText = 'Tryb: zaznaczenie pól właściwych';
+        elem.dataset.switch = 'on';
+    }
 
-        // fill tips right
-        for (let i = 0; i < 10; i++) {
-
-            for (let j = 0; j < 5; j++) {
-                document.getElementById('r' + i + Number(j + 1)).innerText = rightTips[i][j];
-            }
-        }
-        // fill tips upper
-        for (let i = 0; i < 10; i++) {
-            for (let j = 0; j < 5; j++) {
-                document.getElementById('u' + i + Number(j + 1)).innerText = upperTips[i][j];
-            }
-        }*/
-    }// setTips
-
+    buttonMarkNo(): void {
+        this.yesNoMarker = false;
+        const elem = document.getElementById('yesNoMarkerLabel');
+        elem.innerText = 'Tryb: blokowanie pól podejrzewanych o puste';
+        elem.dataset.switch = 'off';
+    }
+    buttonMarkTry(): void {
+        this.yesNoMarker = false;
+        const elem = document.getElementById('yesNoMarkerLabel');
+        elem.innerText = 'Tryb: blokowanie pól podejrzewanych o pełne';
+        elem.dataset.switch = '?';
+    }
 
 
 }
