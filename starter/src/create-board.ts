@@ -64,8 +64,8 @@ export class CreateBoard {
             for (let i = 0; i < 10; i++) {
                 arrayOfChildren[i] = document.createElement('div');
                 arrayOfChildren[i].classList.add('field');
-                arrayOfChildren[i].addEventListener('click', function clickFunction(): void {   //dlaczego dla ()=>{} this.is jest niewidoczne, a dla function(){} jest?
-                    //e.target - tu div
+                arrayOfChildren[i].addEventListener('click', function clickFunction(): void {   // dlaczego dla ()=>{} this.is jest niewidoczne, a dla function(){} jest?
+                    // e.target - tu div
                     if (document.getElementById('yesNoMarkerLabel').dataset.switch === 'on') {
                         if (this.dataset.f === 'p') {
                             this.style.backgroundColor = 'black';
@@ -77,18 +77,18 @@ export class CreateBoard {
                                 document.getElementById('yesNoMarkerLabel').innerHTML = 'Koniec gry! Gratulacje!';
                             }
                             this.removeEventListener('click', clickFunction);
-                        } else {//czyli f
+                        } else {// czyli f
                             this.style.backgroundColor = 'red';
                             if (document.getElementById('lives').innerText === 'Życia: 0') {
                                 document.getElementById('yesNoMarkerLabel').innerHTML = 'Koniec gry! :( Spróbuj jeszcze raz :)';
                                 for (let ii = 0; ii < 10; ii++) {
                                     for (let jj = 0; jj < 10; jj++) {
-                                        //usun event listenery
-                                        //pokaz na zielono V rozwiazania i czerwono X
+                                        // usun event listenery
+                                        // pokaz na zielono V rozwiazania i czerwono X
                                         if (document.getElementById('field' + ii + jj).dataset.f === 'p' && document.getElementById('field' + ii + jj).style.backgroundColor != 'black') {
                                             document.getElementById('field' + ii + jj).style.backgroundColor = 'blue';
                                         }
-                                        document.getElementById('field' + ii + jj).removeEventListener('click', clickFunction);//to nie dziala, bo jest funkcja wew, jakby byla zew, to by dzialala
+                                        document.getElementById('field' + ii + jj).removeEventListener('click', clickFunction);// to nie dziala, bo jest funkcja wew, jakby byla zew, to by dzialala
                                     }
                                 }
 
@@ -116,12 +116,12 @@ export class CreateBoard {
                             } else {
                                 this.innerText = 'X';
                             }
-                        }//else wew do pytajnika
+                        }// else wew do pytajnika
 
                     }
                 });
 
-                ///this.fieldEvent);
+                /// this.fieldEvent);
                 arrayOfRows[j].appendChild(arrayOfChildren[i]);
             }
             boardDiv.appendChild(arrayOfRows[j]);
@@ -192,7 +192,7 @@ export class CreateBoard {
             }
 
         }
-    }//generateBoard
+    }// generateBoard
     buttonMarkYes(): void {
         this.yesNoMarker = true;
         const elem = document.getElementById('yesNoMarkerLabel');
